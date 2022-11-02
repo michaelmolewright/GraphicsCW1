@@ -4,9 +4,8 @@ ColorU8_sRGB_Alpha ImageRGBA::get_pixel( std::size_t aX, std::size_t aY ) const
 {
 	assert( aX < mWidth && aY < mHeight ); // Leave this at the top of the function.
 
+	size_t lin_index = get_linear_index(aX, aY);
 	
-	(void)aX;  // Avoid warnings about unused arguments until the function is
-	(void)aY;  // properly implemented.
 	return { 0, 0, 0, 0 }; //TODO: remove this line when you implement this
 }
 

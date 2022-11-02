@@ -156,16 +156,16 @@ void draw_triangle_interp( Surface& aSurface, Vec2f aP0, Vec2f aP1, Vec2f aP2, C
 	//find the min and max x and y values to shorten the enumerations for checking pixels
 	//this way you are only checking the pixels in the immediate rectangle around the triangle
 
-	size_t min_x, max_x, min_y, max_y;
+	float min_x, max_x, min_y, max_y;
 
-	min_x = (size_t) std::max(std::min(aP0.x, std::min(aP1.x, aP2.x)), 0.f);
-	min_y = (size_t) std::max(std::min(aP0.y, std::min(aP1.y, aP2.y)), 0.f);
+	min_x = std::max(std::min(aP0.x, std::min(aP1.x, aP2.x)), 0.f);
+	min_y = std::max(std::min(aP0.y, std::min(aP1.y, aP2.y)), 0.f);
 
-	max_x = (size_t) std::max(aP0.x, std::max(aP1.x, aP2.x));
-	max_y = (size_t) std::max(aP0.y, std::max(aP1.y, aP2.y));
+	max_x = std::max(aP0.x, std::max(aP1.x, aP2.x));
+	max_y = std::max(aP0.y, std::max(aP1.y, aP2.y));
 
-	max_x = std::min(max_x, aSurface.get_width());
-	max_y = std::min(max_y, aSurface.get_height());
+	max_x = std::min(max_x, float(aSurface.get_width()));
+	max_y = std::min(max_y, float(aSurface.get_height()));
 
 	
 	for (size_t i = min_x; i < max_x; i++ )
@@ -174,7 +174,7 @@ void draw_triangle_interp( Surface& aSurface, Vec2f aP0, Vec2f aP1, Vec2f aP2, C
 		{
 			
 			//create the point vector, and add 0.5 to improve rasterisation (treat pixel as if it was centered)
-			point = {(float) i + 0.5f, (float) j + 0.5f};
+			point = { i + 0.5f, j + 0.5f};
 
 
 			//compute the baycentric coodinate values by coimputing the area of the mini triangles divided by the area of the whole triangle
