@@ -167,7 +167,10 @@ void draw_triangle_interp( Surface& aSurface, Vec2f aP0, Vec2f aP1, Vec2f aP2, C
 	max_x = std::min(max_x, float(aSurface.get_width()));
 	max_y = std::min(max_y, float(aSurface.get_height()));
 
-	
+
+	//size_t for i and j but float for min and max values, makes computation way faster
+	//We dont have to cast float values to i and j for each iteration which costs a ot computationally
+	//can be a size_t as the pixels will never be negative, sue to the min and maxing in the previous step
 	for (size_t i = min_x; i < max_x; i++ )
 	{
 		for (size_t j = min_y; j < max_y; j++ )

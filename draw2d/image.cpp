@@ -12,6 +12,8 @@
 
 #include "../support/error.hpp"
 
+using std::max; using std::min;
+
 namespace
 {
 	struct STBImageRGBA_ : public ImageRGBA
@@ -50,12 +52,40 @@ std::unique_ptr<ImageRGBA> load_image( char const* aPath )
 
 void blit_masked( Surface& aSurface, ImageRGBA const& aImage, Vec2f aPosition )
 {
-	//TODO: your implementation goes here
-	//TODO: your implementation goes here
-	//TODO: your implementation goes here
-	(void)aSurface;  // Avoid warnings about unused arguments until the
-	(void)aImage;    // function is properly implemented.
-	(void)aPosition;
+	
+	//min_x and min_y is just aPositino coodinates as we have just checked it is on the screen
+		
+	float min_x, min_y, max_x, max_y;
+
+
+	max_x = (aPosition.x + float(aImage.get_width()));
+	max_y = (aPosition.y + float(aImage.get_height()));
+
+	
+	min_x = max(aPosition.x, 0.f);
+	min_y = max(aPosition.y, 0.f);
+
+	max_x = min(max_x, float(aSurface.get_width()));
+	max_y = min(max_y, float(aSurface.get_height()));
+
+	ColorU8_sRGB earth;
+
+	for (size_t i = min_x; i < max_x; i++ )
+	{
+		for (size_t j = min_y; j < max_y; j++ )
+		{
+
+			//get the relative pixel value of the image compared to the surface position
+			//as everything is relative to aPostion which I have considered to be 0,0 of the image, you can just subtract aPosition from the i and j values.
+			ColorU8_sRGB_Alpha blitted_pixel = aImage.get_pixel(i - aPosition.x,j - aPosition.y);
+
+			earth.r = blitted_pixel.r;
+			earth.g = blitted_pixel.g;
+			earth.b = blitted_pixel.b;
+
+			aSurface.set_pixel_srgb(i,j, earth);
+		}
+	}
 }
 
 namespace
