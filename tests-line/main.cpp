@@ -90,7 +90,7 @@ int main( int aArgc, char* aArgv[] ) try
 	GLFWWindowDeleter windowDeleter{ window };
 
 	// Set up event handling
-	std::size_t testId = 2;
+	std::size_t testId = 1;
 	glfwSetWindowUserPointer( window, &testId );
 
 	glfwSetKeyCallback( window, &glfw_callback_key_ );
@@ -160,7 +160,6 @@ int main( int aArgc, char* aArgv[] ) try
 
 		// Draw scene
 		surface.clear();
-		testId = 3;
 
 		switch( testId )
 		{

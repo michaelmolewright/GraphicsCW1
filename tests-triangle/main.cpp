@@ -90,7 +90,7 @@ int main( int aArgc, char* aArgv[] ) try
 	GLFWWindowDeleter windowDeleter{ window };
 
 	// Set up event handling
-	std::size_t testId = 2;
+	std::size_t testId = 1;
 	glfwSetWindowUserPointer( window, &testId );
 
 	glfwSetKeyCallback( window, &glfw_callback_key_ );
@@ -161,7 +161,6 @@ int main( int aArgc, char* aArgv[] ) try
 		// Draw scene
 		surface.clear();
 
-		testId = 1;
 		switch( testId )
 		{
 			// Note: this always uses draw_triangle_interp(). However, until
@@ -171,13 +170,21 @@ int main( int aArgc, char* aArgv[] ) try
 			case 1: {
 				// Centered triangle
 				draw_triangle_interp( surface, 
+					{ float(fbwidth), fbheight-100.f },
+					{ fbwidth/2.f+100.f, 100.f },
+					{ fbwidth*3.f/2.f-100.f, 100.f },
+					{ 1.f, 1.f, 0.f },
+					{ 1.f, 0.f, 1.f },
+					{ 0.f, 1.f, 1.f }
+				);
+				/*draw_triangle_interp( surface, 
 					{ fbwidth/2.f, fbheight-100.f },
 					{ 100.f, 100.f },
 					{ fbwidth-100.f, 100.f },
 					{ 1.f, 1.f, 0.f },
 					{ 1.f, 0.f, 1.f },
 					{ 0.f, 1.f, 1.f }
-				);
+				);*/
 			} break;
 
 			case 2: {
@@ -186,9 +193,9 @@ int main( int aArgc, char* aArgv[] ) try
 					{ fbwidth-100.f, 100.f },
 					{ fbwidth/2.f, fbheight-100.f },
 					{ 100.f, 100.f },
+					{ 0.f, 1.f, 1.f },
 					{ 1.f, 1.f, 0.f },
-					{ 1.f, 0.f, 1.f },
-					{ 0.f, 1.f, 1.f }
+					{ 1.f, 0.f, 1.f }
 				);
 			} break;
 
@@ -202,7 +209,17 @@ int main( int aArgc, char* aArgv[] ) try
 					{ 1.f, 0.f, 1.f },
 					{ 0.f, 1.f, 1.f }
 				);
-			} break;
+			}break;
+			case 4: {
+				draw_triangle_interp( surface, 
+					{ fbwidth-100.f, 100.f },
+					{ fbwidth/2.f, fbheight-100.f },
+					{ 100.f, 100.f },
+					{ 0.f, 1.f, 1.f },
+					{ 1.f, 0.f, 1.f },
+					{ 1.f, 1.f, 0.f }
+				);
+			}break;
 
 			//TODO: your own tests here?
 			//TODO: your own tests here?
