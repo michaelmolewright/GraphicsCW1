@@ -16,14 +16,10 @@ float cross_product(Vec2f a, Vec2f b)
 void draw_line_solid( Surface& aSurface, Vec2f aBegin, Vec2f aEnd, ColorU8_sRGB aColor )
 {
 	// start by making sure aBegin has the samller value of x
-	
-	Vec2f temp;
 
 	if (aBegin.x > aEnd.x)
 	{
-		temp = aBegin;
-		aBegin = aEnd;
-		aEnd = temp;
+		std::swap(aBegin, aEnd); //less computationally expensive than using a temp variable
 	}
 
 	float dx, dy, gradient;
