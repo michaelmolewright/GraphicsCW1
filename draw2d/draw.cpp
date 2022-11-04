@@ -26,13 +26,77 @@ void draw_line_solid( Surface& aSurface, Vec2f aBegin, Vec2f aEnd, ColorU8_sRGB 
 		aEnd = temp;
 	}
 
-	float dx, dy, y_inc, x_inc;
+	float dx, dy, gradient;
 
 	dx = aEnd.x - aBegin.x;
-
 	dy = aEnd.y - aBegin.y;
 
-	float step;
+	//call them once so its more efficient than each iteration
+	float width = (float) aSurface.get_width();
+	float height = (float) aSurface.get_height();
+
+	if(dy == 0.f){ // edge case for a horizontal line
+		for (size_t i = aBegin.x; i <= aEnd.x; i++){
+			if ( i < width && i >= 0 && aBegin.y < height && aBegin.y >= 0 ){
+				aSurface.set_pixel_srgb( round(i), round(aBegin.y), aColor );
+			}
+		}
+		return;
+	}
+
+	if(dx == 0.f){ //edge case for a vertical line
+		//have to check which point has a greater y value and adjust the for loops acordingly
+		if(aBegin.y < aEnd.y){
+			for (size_t j = aBegin.y; j <= aEnd.y; j++){
+				if ( aBegin.x < width && aBegin.x >= 0 && j < height && j >= 0 ){
+					aSurface.set_pixel_srgb( round(aBegin.x), round(j), aColor );
+				}
+			}
+		}
+		else{
+			for (size_t j = aEnd.y; j <= aBegin.y; j++){
+				if ( aBegin.x < width && aBegin.x >= 0 && j < height && j >= 0 ){
+					aSurface.set_pixel_srgb( round(aBegin.x), round(j), aColor );
+				}
+			}
+		}
+		
+		return;
+	}
+	
+	
+	
+	gradient = dy/dx;
+
+	if( gradient > 1) {
+		float x = aBegin.x;
+		for (size_t j = aBegin.y; j <= aEnd.y; j++){
+			if ( x < width && x >= 0 && j < height && j >= 0 ){
+				aSurface.set_pixel_srgb( round(x), round(j), aColor );
+			}
+			x += 1/gradient;
+		}
+	}
+	else if ( gradient < -1){ 
+		float x = aBegin.x;
+		for (size_t j = aBegin.y; j >= aEnd.y; j--){
+			if ( x < width && x >= 0 && j < height && j >= 0 ){
+				aSurface.set_pixel_srgb( round(x), round(j), aColor );
+			}
+			x += 1/ ( -1 * gradient);
+		}
+	}
+	else{
+		float y = aBegin.y;
+		for (size_t i = aBegin.x; i <= aEnd.x; i++){
+			if ( i < width && i >= 0 && y < height && y >= 0 ){
+				aSurface.set_pixel_srgb( round(i), round(y), aColor );
+			}
+			y += gradient;
+		}
+	}
+
+	/*float step;
 
 	if ( fabsf( dx ) > fabsf( dy ))
 	{
@@ -57,13 +121,13 @@ void draw_line_solid( Surface& aSurface, Vec2f aBegin, Vec2f aEnd, ColorU8_sRGB 
 
 		if ( x < width && x >= 0 && y < height && y >= 0 )
 		{
-			aSurface.set_pixel_srgb( x, y, aColor );
+			aSurface.set_pixel_srgb( round(x), round(y), aColor );
 		}
 
 		x += x_inc;
 		y += y_inc;
 
-	}
+	}*/
 }
 
 void draw_triangle_wireframe( Surface& aSurface, Vec2f aP0, Vec2f aP1, Vec2f aP2, ColorU8_sRGB aColor )
@@ -96,8 +160,8 @@ void draw_triangle_solid( Surface& aSurface, Vec2f aP0, Vec2f aP1, Vec2f aP2, Co
 	min_x = (size_t) std::max(std::min(aP0.x, std::min(aP1.x, aP2.x)), 0.f);
 	min_y = (size_t) std::max(std::min(aP0.y, std::min(aP1.y, aP2.y)), 0.f);
 
-	max_x = (size_t) std::max(aP0.x, std::max(aP1.x, aP2.x));
-	max_y = (size_t) std::max(aP0.y, std::max(aP1.y, aP2.y));
+	max_x = (size_t) std::max(aP0.x + 1.f, std::max(aP1.x + 1.f, aP2.x + 1.f));
+	max_y = (size_t) std::max(aP0.y + 1.f, std::max(aP1.y + 1.f, aP2.y + 1.f));
 
 	max_x = std::min(max_x, aSurface.get_width());
 	max_y = std::min(max_y, aSurface.get_height());
