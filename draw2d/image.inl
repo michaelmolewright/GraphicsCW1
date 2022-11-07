@@ -34,10 +34,6 @@ std::uint8_t const* ImageRGBA::get_image_ptr() const noexcept
 inline
 std::size_t ImageRGBA::get_linear_index( std::size_t aX, std::size_t aY ) const noexcept
 {
-	
-	
-	std::size_t lin_index = (4*(aY-1)*mWidth) + (4*aX);
-
-
-	return lin_index; //TODO: remove this line when you implement this function
+	std::size_t lin_index = 4*(aY*mWidth + aX);
+	return lin_index; 
 }

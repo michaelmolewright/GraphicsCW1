@@ -74,16 +74,17 @@ void blit_masked( Surface& aSurface, ImageRGBA const& aImage, Vec2f aPosition )
 	{
 		for (size_t j = min_y; j < max_y; j++ )
 		{
-
 			//get the relative pixel value of the image compared to the surface position
 			//as everything is relative to aPostion which I have considered to be 0,0 of the image, you can just subtract aPosition from the i and j values.
 			ColorU8_sRGB_Alpha blitted_pixel = aImage.get_pixel(i - aPosition.x,j - aPosition.y);
 
-			earth.r = blitted_pixel.r;
-			earth.g = blitted_pixel.g;
-			earth.b = blitted_pixel.b;
+			if (blitted_pixel.a > 128) {
+				earth.r = blitted_pixel.r;
+				earth.g = blitted_pixel.g;
+				earth.b = blitted_pixel.b;
 
-			aSurface.set_pixel_srgb(i,j, earth);
+				aSurface.set_pixel_srgb(i,j, earth);
+			}
 		}
 	}
 }

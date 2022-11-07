@@ -196,12 +196,10 @@ void draw_triangle_interp( Surface& aSurface, Vec2f aP0, Vec2f aP1, Vec2f aP2, C
 			//compute the baycentric coodinate values by coimputing the area of the mini triangles divided by the area of the whole triangle
 			a = cross_product({point.x - aP0.x, point.y - aP0.y}, {point.x - aP1.x, point.y - aP1.y}) / area_main;
 			b = cross_product({point.x - aP1.x, point.y - aP1.y}, {point.x - aP2.x, point.y - aP2.y}) / area_main;
-			//g = cross_product({point.x - aP2.x, point.y - aP2.y}, {point.x - aP0.x, point.y - aP0.y}) / area_main;
 
 			//optimised by reducing division and function call
 			g = 1 - a - b;
 			
-
 			if (a >= 0 && a <= 1 && b >= 0 && b <= 1 && g >= 0 && g <= 1){
 				
 				interp_Col = times_col(aC0, aC1, aC2, a, b, g);
