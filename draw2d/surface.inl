@@ -39,7 +39,7 @@ std::size_t Surface::get_height() const noexcept
 inline
 std::size_t Surface::get_linear_index( std::size_t aX, std::size_t aY ) const noexcept
 {
-	std::size_t lin_index = 4 * ((aY-1)*mWidth + aX);
+	std::size_t lin_index = 4 * (aY*mWidth + aX);
 
 	return lin_index;
 }
