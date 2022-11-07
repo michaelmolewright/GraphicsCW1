@@ -16,7 +16,6 @@ float cross_product(Vec2f a, Vec2f b)
 void draw_line_solid( Surface& aSurface, Vec2f aBegin, Vec2f aEnd, ColorU8_sRGB aColor )
 {
 	// start by making sure aBegin has the samller value of x
-
 	if (aBegin.x > aEnd.x)
 	{
 		std::swap(aBegin, aEnd); //less computationally expensive than using a temp variable
@@ -60,10 +59,9 @@ void draw_line_solid( Surface& aSurface, Vec2f aBegin, Vec2f aEnd, ColorU8_sRGB 
 		return;
 	}
 	
-	
-	
 	gradient = dy/dx;
 
+	//DDA algorithm
 	if( gradient > 1) {
 		float x = aBegin.x;
 		for (size_t j = aBegin.y; j <= aEnd.y; j++){
@@ -91,39 +89,6 @@ void draw_line_solid( Surface& aSurface, Vec2f aBegin, Vec2f aEnd, ColorU8_sRGB 
 			y += gradient;
 		}
 	}
-
-	/*float step;
-
-	if ( fabsf( dx ) > fabsf( dy ))
-	{
-		step = fabsf( dx );
-	}
-	else
-	{
-		step = fabsf( dy );
-	}
-
-	x_inc = dx / step;
-	y_inc = dy / step;
-
-	float x = aBegin.x;
-	float y = aBegin.y;
-
-	float width = (float) aSurface.get_width();
-	float height = (float) aSurface.get_height();
-
-	for( size_t i = 0; i < (size_t) step; i++ )
-	{
-
-		if ( x < width && x >= 0 && y < height && y >= 0 )
-		{
-			aSurface.set_pixel_srgb( round(x), round(y), aColor );
-		}
-
-		x += x_inc;
-		y += y_inc;
-
-	}*/
 }
 
 void draw_triangle_wireframe( Surface& aSurface, Vec2f aP0, Vec2f aP1, Vec2f aP2, ColorU8_sRGB aColor )
@@ -146,7 +111,8 @@ void draw_triangle_solid( Surface& aSurface, Vec2f aP0, Vec2f aP1, Vec2f aP2, Co
 	float r1,r2,r3;
 	bool neg, pos;
 	Vec2f point;
-	
+
+
 	
 	//find the min and max x and y values to shorten the enumerations for checking pixels
 	//this way you are only checking the pixels in the immediate rectangle around the triangle

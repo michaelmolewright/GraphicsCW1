@@ -38,12 +38,6 @@ Mat22f operator*( Mat22f const& aLeft, Mat22f const& aRight ) noexcept
 constexpr
 Vec2f operator*( Mat22f const& aLeft, Vec2f const& aRight ) noexcept
 {
-	//float x_new, y_new;
-//
-	//x_new = (aLeft._00 * aRight.x) + (aLeft._01 * aRight.y);
-	//y_new = (aLeft._10 * aRight.x) + (aLeft._11 * aRight.y);
-
-
 	return Vec2f{
 		(aLeft._00 * aRight.x) + (aLeft._01 * aRight.y),
 		(aLeft._10 * aRight.x) + (aLeft._11 * aRight.y)
@@ -54,8 +48,7 @@ Vec2f operator*( Mat22f const& aLeft, Vec2f const& aRight ) noexcept
 
 inline
 Mat22f make_rotation_2d( float aAngle ) noexcept
-{
-	
+{	
 	return Mat22f{ cosf(aAngle), -1 * sinf(aAngle), sinf(aAngle), cosf(aAngle) };
 }
 
