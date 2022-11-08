@@ -9,7 +9,7 @@
  *  0. If you are OK with your space ship design being included in future
  *     computer graphics exercises and/or courseworks, please indicate this by
  *     placing a 'X' in the space between the [ ] on the following line:
- *     [ ] I give permission for my space ship shape to be used in future
+ *     [X] I give permission for my space ship shape to be used in future
  *         computer graphics exercises and/or courseworks.
  *
  *     If you do not wish for your shape to be used, leave the line as is.
@@ -21,7 +21,7 @@
  *     [X] I wish to have my name + year listed with assignments that use my
  *         space ship shape.
  *
- *     If you do not wish to be credited, leave the [ ] empty.
+ *     If you do not wish to be credited, leave the [X] empty.
  *
  *     Many thanks if you do permit the use of your cool space ship designs! It
  *     will help us to make future computer graphics exercises and courseworks
@@ -40,7 +40,7 @@
 #define SPACESHIP_CUSTOM 2
 
 #ifndef SPACESHIP
-#	define SPACESHIP SPACESHIP_DEFAULT
+#	define SPACESHIP SPACESHIP_CUSTOM
 #endif
 
 LineStrip make_spaceship_shape()
@@ -75,10 +75,31 @@ LineStrip make_spaceship_shape()
 		{ 0.2f * xs[0], 0.2f * +ys[5] } // link back to beginning (connects both sides at the "front")
 	} };
 #	elif SPACESHIP == SPACESHIP_CUSTOM
-	LineStrip spaceship{ {
+	static constexpr float ys[] = { 000.f, 020.f, 040.f, 080.f, 100.f, 120.f, 220.f};
+	static constexpr float xs[] = { 250.f, 210.f, 180.f, 120.f, 100.f, 050.f, 000.f, -50.f, -200.f, -100.f};
 
-		// TODO: YOUR DESIGN GOES HERE
-	
+	LineStrip spaceship{ { 
+		{ 0.3f * xs[0], 0.3 * +ys[0] }, //top of ship
+		{ 0.3f * xs[1], 0.3 * +ys[2] },
+		{ 0.3f * xs[2], 0.3 * +ys[2] },
+		{ 0.3f * xs[2], 0.3 * +ys[3] }, 
+		{ 0.3f * xs[3], 0.3 * +ys[5] },
+		{ 0.3f * xs[5], 0.3 * +ys[3] },
+		{ 0.3f * xs[7], 0.3 * +ys[6] },
+		{ 0.3f * xs[6], 0.3 * +ys[2] },
+		{ 0.3f * xs[8], 0.3 * +ys[3] },
+		{ 0.3f * xs[9], 0.3 * +ys[0] },
+
+
+		{ 0.3f * xs[8], 0.3f * -ys[3] }, // bottom of ship
+		{ 0.3f * xs[6], 0.3f * -ys[2] },
+		{ 0.3f * xs[7], 0.3f * -ys[6] },
+		{ 0.3f * xs[5], 0.3f * -ys[3] }, 
+		{ 0.3f * xs[3], 0.3f * -ys[5] },
+		{ 0.3f * xs[2], 0.3f * -ys[3] },
+		{ 0.3f * xs[2], 0.3f * -ys[2] },
+		{ 0.3f * xs[1], 0.3f * -ys[2] },
+		{ 0.3f * xs[0], 0.3f * -ys[0] },
 	} };
 #	endif
 

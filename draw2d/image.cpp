@@ -52,24 +52,17 @@ std::unique_ptr<ImageRGBA> load_image( char const* aPath )
 
 void blit_masked( Surface& aSurface, ImageRGBA const& aImage, Vec2f aPosition )
 {
-	
-	//min_x and min_y is just aPositino coodinates as we have just checked it is on the screen
-		
+	//min_x and min_y is just aPositino coodinates as we have just checked it is on the screen	
 	float min_x, min_y, max_x, max_y;
-
 
 	max_x = (aPosition.x + float(aImage.get_width()));
 	max_y = (aPosition.y + float(aImage.get_height()));
-
-	
 	min_x = max(aPosition.x, 0.f);
 	min_y = max(aPosition.y, 0.f);
-
 	max_x = min(max_x, float(aSurface.get_width()));
 	max_y = min(max_y, float(aSurface.get_height()));
 
 	ColorU8_sRGB earth;
-
 	for (size_t i = min_x; i < max_x; i++ )
 	{
 		for (size_t j = min_y; j < max_y; j++ )
